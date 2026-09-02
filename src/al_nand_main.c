@@ -731,8 +731,7 @@ static void nand_onfi_config_set(
 	struct onfi_params *onfi = chip->parameters.onfi;
 	enum al_nand_device_page_size onfi_page_size;
 	int i;
-	uint16_t async_timing_mode = onfi->async_timing_mode;
-
+	uint16_t async_timing_mode = onfi->sdr_timing_modes;
 	/* Addressing RMN: 2903 */
 	device_properties->timingMode = AL_NAND_DEVICE_TIMING_MODE_MANUAL;
 
@@ -950,7 +949,7 @@ err:
 	return ret;
 }
 
-static int al_nand_remove(struct platform_device *pdev)
+static void al_nand_remove(struct platform_device *pdev)
 {
 	struct nand_data *nand_dat = dev_get_drvdata(&pdev->dev);
 
@@ -961,7 +960,7 @@ static int al_nand_remove(struct platform_device *pdev)
 
 	kfree(nand_dat);
 
-	return 0;
+
 }
 
 static const struct of_device_id al_nand_match[] = {
